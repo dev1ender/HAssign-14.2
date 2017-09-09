@@ -1,0 +1,30 @@
+use custom;
+
+TASK1:
+-------------------------------
+select * from temprature_dataset where zipcode>300000 AND zipcode<399999;
+
+
+
+Task2:
+-------------------------------
+select split(date,'-')[2],MAX(temprature) from temprature_dataset GROUP BY split(date,'-')[2];
+
+
+
+Task3:
+-------------------------------
+select split(date,'-')[2],MAX(temprature),count(*) as CNT from temprature_dataset GROUP BY split(date,'-')[2] having CNT >=2;
+
+
+TASK4:
+-------------------------------
+create view temprature_data_vw(Date ,temprature,count) As select split(date,'-')[2],MAX(temprature),count(*) as CNT from temprature_dataset GROUP BY split(date,'-')[2] having CNT >=2;
+select * from temprature_data_vw;
+
+Task5:
+-------------------------------
+INSERT OVERWRITE LOCAL DIRECTORY '/home/acadgild/flume/14.2/output.txt' ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' select * from temprature_data_vw;
+
+
+
